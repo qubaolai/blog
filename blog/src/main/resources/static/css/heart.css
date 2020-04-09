@@ -1,0 +1,483 @@
+
+.img_2 {
+    left: 1%;
+    animation: img_2 7s infinite forwards;
+    animation-delay: 1s;
+}
+
+.img_3 {
+    left: 19%;
+    animation: img_3 7s infinite forwards;
+    animation-delay: 0.6s;
+}
+
+.img_4 {
+    left: 30%;
+    animation: img_4 7s infinite forwards;
+    animation-delay: 1.7s;
+}
+
+.img_5 {
+    left: 78%;
+    animation: img_5 7s infinite forwards;
+    animation-delay: 1.8s;
+}
+
+.img_6 {
+    left: 50%;
+    animation: img_6 7s infinite forwards;
+    animation-delay: 0.1s;
+}
+
+.img_7 {
+    left: 60%;
+    animation: img_7 7s infinite forwards;
+    animation-delay: 0.2s;
+}
+
+.img_8 {
+    left: 77%;
+    animation: img_8 7s infinite forwards;
+    animation-delay: 0.5s;
+}
+
+.img_9 {
+    left: 80%;
+    animation: img_9 7s infinite forwards;
+    animation-delay: 2s;
+}
+
+.img_11 {
+    left: 90%;
+    animation: img_10 7s infinite forwards;
+    animation-delay: 2.6s;
+}
+
+.img_12 {
+    left: 95%;
+    animation: img_11 7s infinite forwards;
+    animation-delay: 2s;
+}
+
+.img_13 {
+    left: 93%;
+    animation: img_12 7s infinite forwards;
+    animation-delay: 3.3s;
+}
+
+.img_14 {
+    left: 29%;
+    animation: img_13 7s infinite forwards;
+    animation-delay: 3.4s;
+}
+
+.img_15 {
+    left: 35%;
+    animation: img_14 7s infinite forwards;
+    animation-delay: 3.95s;
+}
+
+.img_16 {
+    left: 54%;
+    animation: img_15 7s infinite forwards;
+    animation-delay: 2.2s;
+}
+
+.img_17 {
+    left: 85%;
+
+    animation: img_16 7s infinite forwards;
+    animation-delay: 4.8s;
+}
+
+.img_18 {
+    left: 76%;
+    animation: img_17 7s infinite forwards;
+    animation-delay: 4.7s;
+}
+
+.img_19 {
+    left: 6%;
+    animation: img_18 7s infinite forwards;
+    animation-delay: 4.8s;
+}
+
+.img_20 {
+    left: 58%;
+    animation: img_19 7s infinite forwards;
+    animation-delay: 2.8s;
+}
+
+.img_21 {
+    left: 67%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 1.3s;
+}
+
+.img_10 {
+    left: 84%;
+    animation: img_21 7s infinite forwards;
+    animation-delay: 3.9s;
+}
+
+.img_22 {
+    left: 69%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 3.7s;
+}
+
+.img_23 {
+    left: 27%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 2.5s;
+}
+
+.img_23 {
+    left: 59%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 5s;
+}
+
+.img_24 {
+    left: 45%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 4.9s;
+}
+
+.img_25 {
+    left: 48%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 3.2s;
+}
+
+.img_26 {
+    left: 10%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 3.5s;
+}
+
+.img_27 {
+    left: 15%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 5.7s;
+}
+
+.img_28 {
+    left: 30%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 2.4s;
+}
+
+.img_29 {
+    left: 70%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 4.3s;
+}
+
+.img_30 {
+    left: 20%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 3.8s;
+}
+
+.img_31 {
+    position: fixed;
+    left: 87%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 1.7s;
+}
+
+.img_32 {
+    left: 93%;
+    animation: img_20 7s infinite forwards;
+    animation-delay: 1.5s;
+}
+
+@keyframes img_1 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_2 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_3 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_4 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_5 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_6 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_7 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_8 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_9 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_10 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_11 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_12 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_13 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_14 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_15 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_16 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_17 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_18 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_19 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_20 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_21 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_23 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_24 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_25 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_26 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_27 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_28 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_29 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_30 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_31 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_32 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+
+@keyframes img_22 {
+    from {
+        top: -3%;
+    }
+    to {
+        top: 115%;
+    }
+}
+

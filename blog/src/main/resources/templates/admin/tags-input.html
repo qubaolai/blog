@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>添加标签</title>
+    <link rel="stylesheet" href="../../static/css/blog.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
+</head>
+<body>
+
+<!--导航-->
+<nav th:replace="admin/commons :: menu(3)"></nav>
+<!--二级导航-->
+<div class="ui attached pointing menu">
+    <div class="ui container">
+        <div class="right menu">
+            <a href="" class="orange active item">新增</a>
+        </div>
+    </div>
+</div>
+<!--中间内容-->
+<div class="m-padded-tb-big" style="margin: 10em 0 3em;">
+    <div class="ui container">
+        <form action="#" method="post" th:object="${TTag}" th:action="*{id} == null ? @{/admin/insertTag} : @{/admin/tags/edit}" class="ui form">
+            <input type="hidden" name="id" th:value="*{id}">
+            <div class="field">
+                <div class="ui left labeled input">
+                    <label class="ui teal basic label">标签名称</label>
+                    <input type="text" name="name" placeholder="标签名称" th:value="*{name}">
+                </div>
+            </div>
+            <!--提示信息-->
+            <div class="ui error message"></div>
+            <!--校验信息-->
+            <div class="ui negative message" th:if="${#fields.hasErrors('name')}">
+                <i class="close icon"></i>
+                <div class="header">验证失败</div>
+                <p th:errors="*{name}">提交信息不规则</p>
+            </div>
+            <div class="ui right aligned container">
+                <button type="button" class="ui button" onclick="window.history.go(-1)">返回</button>
+                <button class="ui submit green button">提交</button>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<!--底部footer-->
+<!--底部-->
+<footer class="ui inverted vertical segment m-padding-bottom-maximum">
+    <div class="ui center aligned container">
+        <!--布局-->
+        <!--divided:div分割-->
+        <div class="ui inverted divided grid stackable">
+            <div class="three wide column">
+                <div class="ui card centered" style="width: 120px">
+                    <img src="../../static/images/wechat.jpg" alt="" class="ui rounded image">
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-spaced m-transparent m-text-lined">最新博客</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced m-transparent m-text-lined">
+                    <a href="#" class="item">分享生活中的点滴</a>
+                    <a href="#" class="item">分享生活中的点滴</a>
+                    <a href="#" class="item">分享生活中的点滴</a>
+                    <a href="#" class="item">分享生活中的点滴</a>
+                </div>
+            </div>
+            <div class="four wide column">
+                <h4 class="ui inverted header m-text-spaced m-transparent m-text-lined">联系我</h4>
+                <div class="ui inverted link list m-text-thin m-text-spaced m-transparent m-text-lined">
+                    <a href="#" class="item">QQ: 2424419428</a>
+                    <a href="#" class="item">邮箱: qblsiwen@163.com</a>
+                </div>
+            </div>
+            <div class="five wide column">
+                <h4 class="ui inverted header m-text-spaced m-transparent m-text-lined">关于我</h4>
+                <p class="m-text-thin m-text-spaced m-transparent m-text-lined">一点一点来, 才比较快!</p>
+            </div>
+        </div>
+        <div class="ui inverted section divider"></div>
+        <p class="m-text-thin m-text-spaced m-transparent m-text-lined">© 2020 红杏笔记 红杏笔记 隐私政策 京ICP证0000000号
+            京ICP备########号</p>
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script>
+    $(".m-menu-btn").click(function () {
+        $(".m-item").toggleClass("m-mobile-hide");
+    });
+    $('.ui.dropdown').dropdown({
+        on: "hover"
+    });
+</script>
+<script>
+    $('.menu.toggle').click(function () {
+        $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+        on: 'hover'
+    });
+
+    $('.ui.form').form({
+        fields: {
+            title: {
+                identifier: 'name',
+                rules: [{
+                    type: 'empty',
+                    prompt: '请输入标签名称'
+                }]
+            }
+        }
+    });
+    // 关闭消息提示
+    $('.message .close').
+    on('click', function(){
+        $(this)
+            .closest('.message')
+            .transition('fade');
+    });
+</script>
+</body>
+</html>

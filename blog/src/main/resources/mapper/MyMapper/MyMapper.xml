@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.almond.blog.mapper.myMapper.MyMapper">
+    <resultMap id="BaseResultMap" type="com.almond.blog.pojo.Result">
+        <id column="tId" property="id" jdbcType="INTEGER"/>
+        <result column="tName" property="name" jdbcType="VARCHAR"/>
+        <result column="bNum" property="blogNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="TagResultMap" type="com.almond.blog.pojo.Result">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="tbNum" property="blogNum" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap id="BlogResultMap" type="com.almond.blog.po.TBlog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="commentabled" property="commentabled" jdbcType="INTEGER"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="description" property="description" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="BLOB"/>
+        <result column="first_picture" property="firstPicture" jdbcType="VARCHAR"/>
+        <result column="flag" property="flag" jdbcType="VARCHAR"/>
+        <result column="published" property="published" jdbcType="INTEGER"/>
+        <result column="recommend" property="recommend" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="views" property="views" jdbcType="INTEGER"/>
+        <result column="type_id" property="typeId" jdbcType="INTEGER"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="name" property="typeName" jdbcType="VARCHAR"/>
+        <association property="tUser" javaType="com.almond.blog.po.TUser">
+            <id column="uId" property="id" jdbcType="INTEGER"/>
+            <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+            <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        </association>
+        <!--<association property="content" javaType="com.almond.bloglogWithBLOBs">-->
+        <!--<result column="avatar" property="avatar" jdbcType="VARCHAR" />-->
+        <!--<result column="nickname" property="nickname" jdbcType="VARCHAR" />-->
+        <!--</association>-->
+        <collection property="tags" ofType="com.almond.blog.po.TTag">
+            <id column="gId" property="id" jdbcType="INTEGER"/>
+            <result column="gName" property="name" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, commentabled, create_time, description, first_picture, flag, published, recommend,
+    title, update_time, views, type_id, user_id
+  </sql>
+    <select id="getTypeTop" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        SELECT
+        t.id tId,
+        t.`name` as tName,
+        count( b.id ) AS bNum
+        FROM
+        t_type t
+        LEFT JOIN t_blog b ON t.id = b.type_id
+        GROUP BY
+        t.`name`
+        ORDER BY
+        bNum DESC
+        <if test="size != 0 and size != null">
+            limit 0,#{size}
+        </if>
+    </select>
+    <select id="getTagTop" parameterType="java.lang.Integer" resultMap="TagResultMap">
+        SELECT
+        tg.id,
+        tg.`name`,
+        count( tbg.blogs_id ) tbNum
+        FROM
+        t_tag tg
+        LEFT JOIN t_blog_tags tbg ON tg.id = tbg.tags_id
+        group by tg.`name`
+        order by tbNum desc
+        <if test="size != 0 and size != null">
+            limit 0,#{size}
+        </if>
+    </select>
+    <select id="getRecommendBlog" parameterType="java.lang.Integer" resultMap="BlogResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM
+        t_blog
+        ORDER BY
+        update_time DESC
+        LIMIT 0,#{size}
+    </select>
+    <select id="searchBlog" parameterType="java.lang.String" resultMap="BlogResultMap">
+        SELECT
+        DISTINCT b.id, b.commentabled, b.create_time, b.description, b.first_picture, b.flag, b.published, b.recommend,
+        b.title, b.update_time, b.views, b.type_id, b.user_id, ty.`name`, tu.id uId,tu.avatar, tu.nickname
+        FROM
+        t_blog b
+        LEFT JOIN t_type ty ON b.type_id = ty.id
+        LEFT JOIN t_blog_tags tbg ON b.id = tbg.blogs_id
+        left join t_tag tg on tbg.tags_id = tg.id
+        left join t_user tu on b.user_id = tu.id
+        <where>
+            <if test="search != null and search != ''">
+                b.title like concat('%', #{search}, '%')
+                or b.description like concat('%', #{search}, '%')
+                or ty.`name` = #{search}
+                or tg.`name` = #{search}
+            </if>
+        </where>
+    </select>
+
+    <select id="blogDetails" parameterType="java.lang.Integer" resultMap="BlogResultMap">
+      SELECT
+	b.id,
+	b.commentabled,
+	b.create_time,
+	b.description,
+	b.first_picture,
+	b.content,
+	b.flag,
+	b.published,
+	b.recommend,
+	b.title,
+	b.update_time,
+	b.views,
+	b.type_id,
+	b.user_id,
+	ty.`name`,
+	tu.id uId,
+	tu.avatar,
+	tu.nickname,
+	tg.id gId,
+	tg.`name` gName
+FROM
+	t_blog b
+	LEFT JOIN t_type ty ON b.type_id = ty.id
+	LEFT JOIN t_blog_tags tbg ON b.id = tbg.blogs_id
+	left join t_tag tg on tbg.tags_id = tg.id
+	left join t_user tu on b.user_id = tu.id
+	where b.id = #{id}
+    </select>
+
+    <resultMap id="CommentMap" type="com.almond.blog.po.TComment">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="admin_comment" property="adminComment" jdbcType="INTEGER"/>
+        <result column="avatar" property="avatar" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="nickname" property="nickname" jdbcType="VARCHAR"/>
+        <result column="blog_id" property="blogId" jdbcType="INTEGER"/>
+        <result column="parent_comment_id" property="parentCommentId" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <select id="findByBlogIdParentIdNull" resultMap="CommentMap">
+        select c.id,c.nickname,c.email,c.content,c.avatar,c.create_time,c.blog_id,c.parent_comment_id,c.admin_comment
+        from blog.t_comment c
+        where c.blog_id = #{blogId} and c.parent_comment_id is null
+        order by c.create_time desc
+    </select>
+
+    <resultMap id="ArchiveResultMap" type="com.almond.blog.po.TBlog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="name" property="typeName" jdbcType="VARCHAR"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <result column="flag" property="flag" jdbcType="VARCHAR"/>
+        <result column="formatDate" property="updateYear" jdbcType="TIMESTAMP"/>
+        <result column="bNum" property="views" jdbcType="INTEGER"/>
+    </resultMap>
+    <select id="getArchiveBlog" resultMap="ArchiveResultMap">
+        SELECT
+	tb.id,
+	tb.title,
+	ty.`name`,
+	tb.update_time,
+	tb.flag,
+	DATE_FORMAT( tb.update_time,'%Y' ) formatDate
+FROM
+	t_blog tb
+	left join t_type ty on tb.type_id = ty.id
+group BY
+	formatDate,ty.`name`
+order by formatDate desc
+    </select>
+
+    <select id="countBlog" resultType="java.lang.Integer">
+        select count(tb.id) from t_blog tb
+    </select>
+</mapper>
