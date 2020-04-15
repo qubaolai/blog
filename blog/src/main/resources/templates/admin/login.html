@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>博客管理登录</title>
+  <title>博客管理登录</title><link rel="shortcut icon" th:href="@{/static/images/favicon.ico}"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
   <link rel="stylesheet" th:href="@{/static/css/blog.css}">
+  <link rel="shortcut icon" th:href="@{/static/images/favicon.ico}"/>
 </head>
-<body>
+<body class="m-admin-back">
 <div class="m-container-small m-padded-tb-massive" style="max-width: 30em !important;">
     <div class="ui container">
         <div class="ui middle aligned center aligned grid">
@@ -22,13 +23,13 @@
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="user icon"></i>
-                                <input type="text" name="username" placeholder="Username" value="asd">
+                                <input type="text" name="username" placeholder="Username">
                             </div>
                         </div>
                         <div class="field">
                             <div class="ui left icon input">
                                 <i class="lock icon"></i>
-                                <input type="password" name="password" placeholder="Password" value="asd">
+                                <input type="password" name="password" placeholder="Password">
                             </div>
                         </div>
                         <input class="ui fluid large teal submit button" type="submit" value="Login"></input>

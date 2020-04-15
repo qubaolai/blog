@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="commons :: head(~{::title})">
+    <title>404咯~</title>
 </head>
 <body>
-404
+
+<!--导航-->
+<nav th:replace="commons :: menu(0)"></nav>
+
+<br>
+<br>
+<br>
+
+<div class="m-container-small m-padded-tb-massive" style="max-width: 90em !important;">
+    <div class="ui error message m-padded-tb-huge" >
+        <div class="ui contianer">
+            <h2>404</h2>
+            <p>对不起，你访问的资源不存在</p>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+
+<footer th:replace="commons :: foot(${session.recommendBlog})"></footer>
+<th:block th:replace="commons :: script" />
 </body>
 </html>

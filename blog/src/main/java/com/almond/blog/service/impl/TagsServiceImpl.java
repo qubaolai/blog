@@ -5,6 +5,8 @@ import com.almond.blog.mapper.myMapper.MyMapper;
 import com.almond.blog.po.*;
 import com.almond.blog.pojo.Result;
 import com.almond.blog.service.TagsService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,7 +75,7 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public List<TBlog> getBlogByTagId(Integer id) {
+    public PageInfo<TBlog> getBlogByTagId(Integer pageNo, Integer pageSize, Integer id) {
         //通过标签id获取博客id列表
         TBlogTagsExample tBlogTagsExample = new TBlogTagsExample();
         TBlogTagsExample.Criteria criteria = tBlogTagsExample.createCriteria();
@@ -89,10 +91,12 @@ public class TagsServiceImpl implements TagsService {
         TBlogExample tBlogExample = new TBlogExample();
         TBlogExample.Criteria criteria1 = tBlogExample.createCriteria();
         criteria1.andIdIn(list);
+        PageHelper.startPage(pageNo,pageSize);
         List<TBlog> tBlogs = tBlogMapper.selectByExample(tBlogExample);
+        PageInfo<TBlog> tBlogPageInfo = new PageInfo<>(tBlogs);
         //获取作者信息
-        if(tBlogs != null && 0 < tBlogs.size()){
-            for(TBlog tBlog : tBlogs){
+        if(tBlogPageInfo.getList() != null && 0 < tBlogPageInfo.getList().size()){
+            for(TBlog tBlog : tBlogPageInfo.getList()){
                 TUser tUser = tUserMapper.selectByPrimaryKey(tBlog.getUserId());
                 tBlog.setTUser(tUser);
                 //获取分类信息
@@ -100,6 +104,6 @@ public class TagsServiceImpl implements TagsService {
                 tBlog.setTypeName(tType.getName());
             }
         }
-        return tBlogs;
+        return tBlogPageInfo;
     }
 }

@@ -3,6 +3,7 @@
 <head th:fragment="_head(title)">
     <meta charset="UTF-8">
     <title th:replace="${title}">Title</title>
+    <link rel="shortcut icon" th:href="@{/static/images/favicon.ico}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/static/css/blog.css}">
     <link rel="stylesheet" th:href="@{/static/css/typo.css}">
@@ -16,18 +17,24 @@
 <!--导航-->
 <nav th:fragment="menu(index)" class="ui inverted attached segment m-padding-bt-mini m-shadow-small">
     <div class="ui container">
+        <!--stackable使元素堆叠-->
         <div class="ui inverted secondary stackable menu">
             <h2 class="ui orange header item">红杏笔记</h2>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 1} ? 'active'" th:href="@{/}"><i class="mini home icon"></i>主页</a>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 2} ? 'active'" th:href="@{/blog/types/{id}(id=0)}"><i class="mini idea icon"></i>分类</a>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 3} ? 'active'" th:href="@{/blog/tags/{id}(id=0)}"><i class="mini tags icon"></i>标签</a>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 4} ? 'active'" th:href="@{/blog/archive}"><i class="mini clone icon"></i>归档</a>
-            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 5} ? 'active'" th:href="@{/blog/about}"><i class="mini info icon"></i>关于我</a>
-            <div class="right item">
-                <form id="searchForm" action="#" th:action="@{/blog/search}" method="post">
-                    <div class="ui icon input m-search-position">
-                        <input type="text" name="search" placeholder="标题/分类/标签">
-                        <i id="search-btn" onclick="subForm()" class="search link icon"></i>
+            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 1} ? 'active'" th:href="@{/}"><i
+                    class="mini home icon"></i>主页</a>
+            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 2} ? 'active'"
+               th:href="@{/blog/types/{id}(id=0)}"><i class="mini idea icon"></i>分类</a>
+            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 3} ? 'active'"
+               th:href="@{/blog/tags/{id}(id=0)}"><i class="mini tags icon"></i>标签</a>
+            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 4} ? 'active'"
+               th:href="@{/blog/archive}"><i class="mini clone icon"></i>归档</a>
+            <a href="#" class="m-item item m-mobile-hide" th:classappend="${index == 5} ? 'active'"
+               th:href="@{/blog/about}"><i class="mini info icon"></i>关于我</a>
+            <div class="right item m-item m-mobile-hide">
+                <form id="searchForm" action="#" th:action="@{/blog/search}" method="get">
+                    <div class="ui icon input">
+                        <input type="text" name="search" th:value="${search}" placeholder="标题/分类/标签" style="height: 30px;">
+                        <i id="search-btn" onclick="document.forms['searchForm'].submit()" class="search link icon"></i>
                     </div>
                 </form>
             </div>
@@ -37,7 +44,7 @@
     <!--menu-toggle为jquery获取用-->
     <a href="#" class="m-menu-btn ui icon black button m-position m-mobile-btn-show"><i class="sidebar icon"></i></a>
 </nav>
-<footer th:fragment="foot" class="ui inverted vertical segment m-padding-bottom-maximum">
+<footer th:fragment="foot(recommendBlog)" class="ui inverted vertical segment m-padding-bottom-maximum">
     <div class="ui center aligned container">
         <!--布局-->
         <!--divided:div分割-->
@@ -50,10 +57,13 @@
             <div class="four wide column">
                 <h4 class="ui inverted header m-text-spaced m-transparent m-text-lined">最新博客</h4>
                 <div class="ui inverted link list m-text-thin m-text-spaced m-transparent m-text-lined">
+                    <a href="#" class="item" th:each="recommend : ${recommendBlog}"
+                       th:href="@{/blog/details/{id}(id=${recommend.id})}" th:text="${recommend.title}">分享生活中的点滴</a>
+                    <!--/*
                     <a href="#" class="item">分享生活中的点滴</a>
                     <a href="#" class="item">分享生活中的点滴</a>
                     <a href="#" class="item">分享生活中的点滴</a>
-                    <a href="#" class="item">分享生活中的点滴</a>
+                    */-->
                 </div>
             </div>
             <div class="four wide column">
@@ -69,11 +79,12 @@
             </div>
         </div>
         <div class="ui inverted section divider"></div>
-        <p class="m-text-thin m-text-spaced m-transparent m-text-lined">© 2020 红杏笔记 红杏笔记 隐私政策 京ICP证0000000号
-            京ICP备########号</p>
+        <p class="m-text-thin m-text-spaced m-transparent m-text-lined">© 2020 红杏笔记 吉ICP备20000468号-1</p>
+        <div>
+            <span class="foot-date"></span>
+        </div>
     </div>
 </footer>
-
 <th:block th:fragment="script">
     <script src="../../static/lib/prism/prism.js"></script>
     <script src="../../static/lib/tocbot/tocbot.min.js"></script>
@@ -81,14 +92,22 @@
     <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
     <script>
         //搜索
-        $('#search-btn').click(function () {
-            $('#searchForm').submit();
-        });
+        // $('#search-btn').click(function () {
+        //     $('#searchForm').submit();
+        // });
     </script>
     <!--背景-->
     <script type="text/javascript">
-
-        !function () {
+        !function (){
+            var browserWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+            if(browserWidth > 768){
+                line();
+                document.body.style.backgroundImage="url(/static/images/blog.jpg)"
+            }else{
+                document.body.style.backgroundColor="white";
+            }
+        }();
+        function line () {
             //封装方法，压缩之后减少文件大小
             function get_attribute(node, attr, default_value) {
                 return node.getAttribute(attr) || default_value;
@@ -144,7 +163,7 @@
                                 d = (e.max - dist) / e.max,
                                 context.beginPath(),
                                 context.lineWidth = d / 2,
-                                context.strokeStyle = "#FFA500",//这里是线条的颜色
+                                context.strokeStyle = "#FFF8DC",//这里是线条的颜色
                                 context.moveTo(r.x, r.y),
                                 context.lineTo(e.x, e.y),
                                 context.stroke());
@@ -203,7 +222,7 @@
             setTimeout(function () {
                 draw_canvas();
             }, 100);
-        }();
+        };
     </script>
     <!--红心特显-->
     <script type="text/javascript">
@@ -212,12 +231,14 @@
                 for (var e = 0; e < s.length; e++) s[e].alpha <= 0 ? (t.body.removeChild(s[e].el), s.splice(e, 1)) : (s[e].y--, s[e].scale += .004, s[e].alpha -= .013, s[e].el.style.cssText = "left:" + s[e].x + "px;top:" + s[e].y + "px;opacity:" + s[e].alpha + ";transform:scale(" + s[e].scale + "," + s[e].scale + ") rotate(45deg);background:" + s[e].color + ";z-index:99999");
                 requestAnimationFrame(r)
             }
+
             function n() {
                 var t = "function" == typeof e.onclick && e.onclick;
                 e.onclick = function (e) {
                     t && t(), o(e)
                 }
             }
+
             function o(e) {
                 var a = t.createElement("div");
                 a.className = "heart", s.push({
@@ -229,6 +250,7 @@
                     color: c()
                 }), t.body.appendChild(a)
             }
+
             function i(e) {
                 var a = t.createElement("style");
                 a.type = "text/css";
@@ -239,9 +261,11 @@
                 }
                 t.getElementsByTagName("head")[0].appendChild(a)
             }
+
             function c() {
                 return "rgb(" + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + "," + ~~(255 * Math.random()) + ")"
             }
+
             var s = [];
             e.requestAnimationFrame = e.requestAnimationFrame || e.webkitRequestAnimationFrame || e.mozRequestAnimationFrame || e.oRequestAnimationFrame || e.msRequestAnimationFrame || function (e) {
                 setTimeout(e, 1e3 / 60)
@@ -253,14 +277,14 @@
         var a_idx = 0;
         jQuery(document).ready(function ($) {
             $("body").click(function (e) {
-                var a = new Array("文明","友善","富强","民主","和谐","爱国","敬业","独立");
+                var a = new Array("文明", "友善", "富强", "民主", "和谐", "爱国", "敬业", "独立");
                 var $i = $("<span/>").text(a[a_idx]);
                 a_idx = (a_idx + 1) % a.length;
                 var x = e.pageX, y = e.pageY;
                 $i.css({
                     "z-index": 100000000,
-                    "top": y - 20,
-                    "left": x - 10,
+                    "top": y - 15,
+                    "left": x - 14,
                     "position": "absolute",
                     "font-weight": "bold",
                     "color": "#ff6651"
@@ -271,6 +295,43 @@
                 });
             });
         });
+    </script>
+    <!--运行时间-->
+    <script type="text/javascript">
+        function run_date(date) {
+            // 建站日期
+            var created = Date.parse(date);
+            // 现在时间
+            var now = new Date().getTime();
+            // 存活时间
+            var cha = now - created;
+            // 有多少天
+            var day = cha / 864e5;
+            // 取整数输出天
+            var day_c = Math.floor(day);
+            // 减去整数的天，得出剩下的小数，并变成小时（1 天等于 24 小时）
+            var hour = 24 * (day - day_c);
+            // 取整数输出小时
+            var hour_c = Math.floor(hour);
+            // 减去剩下的小时，得出剩下的小数，几分钟（1小时等于60分）
+            var min = 60 * (hour - hour_c);
+            // 取整数输出分钟
+            var min_c = Math.floor(min);
+            // 剩下的就是秒，直接取整
+            var sec = Math.floor(60 * (min - min_c));
+            return "红杏笔记已运行 <a>" + day_c + "</a> 天 <a>" + hour_c + "</a> 小时 <a>" + min_c + "</a> 分 <a>" + sec + "</a> 秒";
+        }
+
+        setInterval(function () {
+            document.querySelector(".foot-date").innerHTML = run_date("2020/4/9");
+        }, 1000);
+
+        function add_zero(num) {
+            if (num.toString().length < 2) {
+                num = "0" + num;
+            }
+            return num;
+        }
     </script>
 </th:block>
 </body>

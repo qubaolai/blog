@@ -1,0 +1,21 @@
+server:
+  port: 8557
+spring:
+  datasource:
+    username: root
+    password: 102030.ainiA
+    url: jdbc:mysql://39.106.29.131:3306/blog?useUnicode=true&characterEncoding=utf-8&useSSL=true
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+  mvc:
+    favicon:
+      enabled: false
+mybatis:
+  mapperLocations: classpath:mapper/**/*Mapper.xml
+  #  config-location: classpath:mybatis-config.xml

@@ -1,6 +1,7 @@
 package com.almond.blog.service;
 
 import com.almond.blog.po.TBlog;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public interface BlogService {
      * 获取所有文章
      * @return
      */
-    public List<TBlog> allBlog();
+    public PageInfo<TBlog> allBlog(Integer pageNo, Integer pageSize);
 
     /**
      * 最新推荐博客

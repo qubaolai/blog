@@ -3,6 +3,7 @@ package com.almond.blog.service;
 import com.almond.blog.po.TBlog;
 import com.almond.blog.po.TTag;
 import com.almond.blog.pojo.Result;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -52,5 +53,5 @@ public interface TagsService {
      * @param id
      * @return
      */
-    public List<TBlog> getBlogByTagId(Integer id);
+    public PageInfo<TBlog> getBlogByTagId(Integer pageNo, Integer pageSize, Integer id);
 }

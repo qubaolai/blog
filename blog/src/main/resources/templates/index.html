@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head th:replace="commons :: head(~{::title})">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../static/css/blog.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <title>首页</title>
 </head>
 <body>
@@ -16,18 +12,6 @@
     <!--semantic自带容器,有响应式效果        -->
     <div class="ui container" style="width: 80%;">
         <div class="ui grid stackable">
-            <!--左侧个人信息-->
-            <!--            <div class="four wide column">-->
-            <!--                <div class="ui centered card">-->
-            <!--                    <img src="https://picsum.photos/id/1014/200/300" class="ui avatar image" alt="">-->
-            <!--                    <div class="content">-->
-            <!--                        红杏: 一个热爱编程的小伙子!-->
-            <!--                        <div class="meta">-->
-            <!--                            一点一点来,才比较快.-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
             <!--左侧博客列表-->
             <div class="eleven wide column">
                 <!--头部-->
@@ -38,13 +22,13 @@
                             <h3 class="ui orange header">文章</h3>
                         </div>
                         <div class="right aligned column m-text-spaced-middle">
-                            共<h3 class="ui teal header m-inlined m-text-thin" th:text="${blogs.size()}">10</h3>篇
+                            共<h3 class="ui teal header m-inlined m-text-thin" th:text="${page.total}">10</h3>篇
                         </div>
                     </div>
                 </div>
                 <!--文章列表-->
                 <div class="ui attached segment">
-                    <div class="ui padded vertical segment" th:each="blog : ${blogs}">
+                    <div class="ui padded vertical segment" th:each="blog : ${page.list}">
                         <div class="ui grid middle aligned stackable mobile reversed">
                             <div class="eleven wide column">
                                 <h3 class="ui header"><a style="color: black;" href="#" th:href="@{/blog/details/{id}(id=${blog.id})}" th:text="${blog.title}">标题</a></h3>
@@ -74,7 +58,7 @@
                                         </div>
                                     </div>
                                     <div class="right aligned five wide column">
-                                        <a href="#" class="ui orange basic label m-padding-mini m-text-thin" th:text="${blog.tType.name}">分类</a>
+                                        <span class="ui orange basic label m-padding-mini m-text-thin" th:text="${blog.tType.name}">分类</span>
                                     </div>
                                 </div>
                             </div>
@@ -86,14 +70,14 @@
                         </div>
                     </div>
                 </div>
-                <!--底部-->
+                <!--底部分页-->
                 <div class="ui bottom attached segment">
                     <div class="ui middle aligned two column grid">
                         <div class="column">
-                            <a href="#" class="ui orange basic mini button">上一页</a>
+                            <a href="#" class="ui orange basic mini button" th:if="${page.hasPreviousPage}" th:href="'?pageNo='+${page.prePage}">上一页</a>
                         </div>
                         <div class="right aligned column">
-                            <a href="#" class="ui orange basic mini button">下一页</a>
+                            <a href="#" class="ui orange basic mini button" th:if="${page.hasNextPage}" th:href="'?pageNo='+${page.nextPage}">下一页</a>
                         </div>
                     </div>
                 </div>
@@ -112,7 +96,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui teal segment">
+                    <div class="ui orange segment">
                         <div class="ui fluid vertical menu">
                             <a href="#" th:each="tResult : ${TypeResult}" class="item" th:href="@{/blog/types/{id}(id=${tResult.id})}">
                                 <span th:text="${tResult.name}">学习日志</span>
@@ -130,13 +114,13 @@
                                 <i class="tags icon"></i>标签
                             </div>
                             <div class="right aligned column">
-                                <a href="#">more </a>
+                                <a href="#" th:href="@{/blog/tags/{id}(id=0)}">more </a>
                             </div>
                         </div>
                     </div>
                     <!--标签内容-->
-                    <div class="ui teal segment">
-                        <a class="ui teal basic label m-margined-bt-middle" th:each="tag : ${tagResult}" th:href="@{/blog/tags/{id}(id=${tag.id})}">
+                    <div class="ui orange segment">
+                        <a class="ui orange basic label m-margined-bt-middle" th:each="tag : ${tagResult}" th:href="@{/blog/tags/{id}(id=${tag.id})}">
                             <span th:text="${tag.name}">java</span>
                             <div class="detail" th:text="${tag.blogNum}">10</div>
                         </a>
@@ -152,7 +136,7 @@
                     </div>
                 </div>
                 <!--二维码-->
-                <h4 class="ui horizontal divider header m-margin-top">关注我呗</h4>
+                <h4 class="ui horizontal divider header m-margin-top orange">关注我呗</h4>
                 <div class="ui centered card" style="width: 11em;">
                     <img th:src="@{/static/images/wechat.jpg}" class="ui rounded image" alt="">
                 </div>
@@ -161,7 +145,7 @@
     </div>
 </div>
 <!--底部-->
-<footer th:replace="commons :: foot"></footer>
+<footer th:replace="commons :: foot(${session.recommendBlog})"></footer>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <script>
@@ -170,6 +154,6 @@
     });
 </script>
 <th:block th:replace="commons :: script" />
-<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+<!--<script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>-->
 </body>
 </html>

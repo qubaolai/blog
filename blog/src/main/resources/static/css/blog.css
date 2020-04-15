@@ -130,6 +130,10 @@
     padding-top: 15em !important;
     padding-bottom: 5em !important;
 }
+/*后台背景*/
+.m-admin-back {
+    background-image: url(/static/images/adminBack.jpg);
+}
 
 /*手机端样式*/
 @media screen and (max-width: 768px) {
@@ -138,11 +142,12 @@
     }
     /*改变搜索框*/
     .m-search-position {
-        width: 10em !important;
-        height: 2em !important;
-        position: absolute !important;
-        top: -2.8em !important;
-        left: 15em !important;
+        /*width: 10em !important;*/
+        /*height: 2em !important;*/
+        /*position: absolute !important;*/
+        /*top: -2.8em !important;*/
+        /*left: 15em !important;*/
+        display: none !important;
     }
 
     /*显示按钮*/
@@ -158,5 +163,9 @@
 
     .m-mobile-wide {
         width: 100% !important;
+    }
+
+    .m-image {
+        width: 60% !important;
     }
 }

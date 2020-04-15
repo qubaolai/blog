@@ -38,6 +38,6 @@ public class MD5Utils {
 
 
     public static void main(String[] args) {
-        System.out.println(code("asd"));
+        System.out.println(code("102030.ainiA"));
     }
 }

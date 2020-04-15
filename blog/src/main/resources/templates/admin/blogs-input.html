@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head th:replace="admin/commons :: head(~{::title})">
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <!--<link rel="stylesheet" href="../../static/css/blog.css">-->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">-->
+    <!--<link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">-->
     <title>博客发布</title>
-    <link rel="stylesheet" href="../../static/css/blog.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
-    <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css">
 </head>
-<body>
+<body class="m-admin-back">
 
 <!--导航-->
-<nav th:replace="admin/commons :: menu(1)"></nav>
+<nav th:replace="admin/commons :: menu(1,${session.user.nickname})"></nav>
 <!--二级导航-->
 <div class="ui attached pointing menu">
     <div class="ui container">

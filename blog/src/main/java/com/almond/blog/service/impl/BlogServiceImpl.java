@@ -5,6 +5,8 @@ import com.almond.blog.mapper.*;
 import com.almond.blog.mapper.myMapper.MyMapper;
 import com.almond.blog.po.*;
 import com.almond.blog.service.BlogService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -166,10 +168,13 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public List<TBlog> allBlog() {
+    public PageInfo<TBlog> allBlog(Integer pageNo, Integer pageSize) {
+        PageHelper.startPage(pageNo,pageSize);
         List<TBlog> tBlogs = tBlogMapper.selectByExample(new TBlogExample());
-        if (tBlogs != null && 0 < tBlogs.size()) {
-            for (TBlog tBlog : tBlogs) {
+        PageInfo<TBlog> tBlogPageInfo = new PageInfo<>(tBlogs);
+        List<TBlog> list = tBlogPageInfo.getList();
+        if (list != null && 0 < list.size()) {
+            for (TBlog tBlog : list) {
                 //根据博客id查询分类
                 TType tType = tTypeMapper.selectByPrimaryKey(tBlog.getTypeId());
                 tBlog.setTType(tType);
@@ -178,7 +183,7 @@ public class BlogServiceImpl implements BlogService {
                 tBlog.setTUser(tUser);
             }
         }
-        return tBlogs;
+        return tBlogPageInfo;
     }
 
     @Override
@@ -240,6 +245,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public Map<String, List<TBlog>> getArchiveBlog() {
+
         List<TBlog> list = myMapper.getArchiveBlog();
         Map<String, List<TBlog>> map = new HashMap<>();
         for (TBlog num : list){

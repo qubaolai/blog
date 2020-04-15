@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/static/css/blog.css}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+<head th:replace="admin/commons :: head(~{::title})">
+    <!--<meta charset="UTF-8">-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <!--<link rel="stylesheet" th:href="@{/static/css/blog.css}">-->
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">-->
     <title>分类管理</title>
 </head>
-<body>
+<body  class="m-admin-back">
 <!--导航-->
-<nav th:replace="admin/commons :: menu(2)"></nav>
+<nav th:replace="admin/commons :: menu(2,${session.user.nickname})"></nav>
 <!--二级导航-->
 <div class="ui attached pointing menu">
     <div class="ui container">
