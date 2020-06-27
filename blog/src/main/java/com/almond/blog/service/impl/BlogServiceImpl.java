@@ -1,5 +1,6 @@
 package com.almond.blog.service.impl;
 
+import com.almond.blog.commons.utils.DateUtil;
 import com.almond.blog.commons.utils.MarkdownUtils;
 import com.almond.blog.mapper.*;
 import com.almond.blog.mapper.myMapper.MyMapper;
@@ -13,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BlogServiceImpl implements BlogService {
@@ -169,8 +171,13 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public PageInfo<TBlog> allBlog(Integer pageNo, Integer pageSize) {
-        PageHelper.startPage(pageNo,pageSize);
-        List<TBlog> tBlogs = tBlogMapper.selectByExample(new TBlogExample());
+        PageHelper.startPage(pageNo, pageSize);
+        TBlogExample tBlogExample = new TBlogExample();
+        tBlogExample.setOrderByClause("update_time DESC");
+
+        TBlogExample.Criteria criteria = tBlogExample.createCriteria();
+        criteria.andPublishedEqualTo(1);
+        List<TBlog> tBlogs = tBlogMapper.selectByExample(tBlogExample);
         PageInfo<TBlog> tBlogPageInfo = new PageInfo<>(tBlogs);
         List<TBlog> list = tBlogPageInfo.getList();
         if (list != null && 0 < list.size()) {
@@ -213,8 +220,10 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public List<TBlog> getBlogByTypeId(Integer id) {
         TBlogExample tBlogExample = new TBlogExample();
+        tBlogExample.setOrderByClause("update_time DESC");
         TBlogExample.Criteria criteria = tBlogExample.createCriteria();
         criteria.andTypeIdEqualTo(id);
+        criteria.andPublishedEqualTo(1);
         List<TBlog> tBlogs = tBlogMapper.selectByExample(tBlogExample);
         //获取博客的标签
         for (TBlog tBlog : tBlogs) {
@@ -246,21 +255,25 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public Map<String, List<TBlog>> getArchiveBlog() {
 
-        List<TBlog> list = myMapper.getArchiveBlog();
-        Map<String, List<TBlog>> map = new HashMap<>();
-        for (TBlog num : list){
-            // map是否包含此key，若已经包含则添加一个新的对象到对应value集合中
-            if (map.containsKey(num.getUpdateYear())){
-                map.get(num.getUpdateYear()).add(num);
-            }else{
-                // map不包含此key，则重新创建一个新集合，并把这个对象添加进集合
-                // ，再把集合放到map中
-                List<TBlog> newList = new ArrayList<>();
-                newList.add(num);
-                map.put(num.getUpdateYear(), newList);
-            }
-        }
-        return map;
+        TBlogExample tBlogExample = new TBlogExample();
+        tBlogExample.setOrderByClause("update_time DESC");
+        TBlogExample.Criteria criteria = tBlogExample.createCriteria();
+        criteria.andPublishedEqualTo(1);
+        List<TBlog> tBlogs = tBlogMapper.selectByExample(tBlogExample);
+        Map<String, List<TBlog>> collect = tBlogs.stream().collect(Collectors.groupingBy(o ->
+                DateUtil.getDateYearMonth(o.getUpdateTime())
+        ));
+        Map<String, List<TBlog>> sortedMap = collect.entrySet().stream()
+                .sorted(Map.Entry.<String, List<TBlog>>comparingByKey().reversed())
+                .collect(
+                        Collectors.toMap(
+                                Map.Entry::getKey,
+                                Map.Entry::getValue,
+                                (oldVal, newVal) -> oldVal,
+                                LinkedHashMap::new
+                        )
+                );
+        return sortedMap;
     }
 
     @Override

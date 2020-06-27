@@ -91,6 +91,7 @@ public class TagsServiceImpl implements TagsService {
         TBlogExample tBlogExample = new TBlogExample();
         TBlogExample.Criteria criteria1 = tBlogExample.createCriteria();
         criteria1.andIdIn(list);
+        criteria1.andPublishedEqualTo(1);
         PageHelper.startPage(pageNo,pageSize);
         List<TBlog> tBlogs = tBlogMapper.selectByExample(tBlogExample);
         PageInfo<TBlog> tBlogPageInfo = new PageInfo<>(tBlogs);

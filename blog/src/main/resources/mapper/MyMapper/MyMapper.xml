@@ -53,6 +53,7 @@
         FROM
         t_type t
         LEFT JOIN t_blog b ON t.id = b.type_id
+        AND b.published = 1
         GROUP BY
         t.`name`
         ORDER BY
@@ -64,13 +65,17 @@
     <select id="getTagTop" parameterType="java.lang.Integer" resultMap="TagResultMap">
         SELECT
         tg.id,
-        tg.`name`,
-        count( tbg.blogs_id ) tbNum
+        tg.NAME,
+        count( tb.id ) AS tbNum
         FROM
         t_tag tg
         LEFT JOIN t_blog_tags tbg ON tg.id = tbg.tags_id
-        group by tg.`name`
-        order by tbNum desc
+        LEFT JOIN t_blog tb ON tb.id = tbg.blogs_id
+        AND tb.published = 1
+        GROUP BY
+        tg.`name`
+        ORDER BY
+        tbNum DESC
         <if test="size != 0 and size != null">
             limit 0,#{size}
         </if>
@@ -80,6 +85,8 @@
         <include refid="Base_Column_List"/>
         FROM
         t_blog
+        WHERE
+        published = 1
         ORDER BY
         update_time DESC
         LIMIT 0,#{size}
@@ -101,6 +108,7 @@
                 or ty.`name` = #{search}
                 or tg.`name` = #{search}
             </if>
+            AND b.published == 1
         </where>
     </select>
 
@@ -180,6 +188,6 @@ order by formatDate desc
     </select>
 
     <select id="countBlog" resultType="java.lang.Integer">
-        select count(tb.id) from t_blog tb
+        select count(tb.id) from t_blog tb WHERE tb.published = 1
     </select>
 </mapper>

@@ -27,7 +27,7 @@ public class UTypeController {
      * @return model
      */
     @GetMapping("/blog/types/{id}")
-    public String toTypePage(@PathVariable Integer id, @RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="2")int pageSize, Model model){
+    public String toTypePage(@PathVariable Integer id, @RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="5")int pageSize, Model model){
         //获取所有分类信息
         List<Result> typeTop = typeService.getTypeTop(0);
         model.addAttribute("TypeResult", typeTop);

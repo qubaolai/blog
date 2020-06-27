@@ -31,7 +31,7 @@ public class IndexController {
      * @return
      */
     @GetMapping("/")
-    public String index(@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="2")int pageSize,Model model){
+    public String index(@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="5")int pageSize,Model model){
         model.addAttribute("page", blogService.allBlog(pageNo,pageSize));
         model.addAttribute("TypeResult", typeService.getTypeTop(7));
         model.addAttribute("tagResult", tagsService.getTagTop(7));
@@ -46,7 +46,7 @@ public class IndexController {
      * @return
      */
     @GetMapping("/blog/search")
-    public String search(Model model, @RequestParam String search,@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="2")int pageSize){
+    public String search(Model model, @RequestParam String search,@RequestParam(value="pageNo",defaultValue="1")int pageNo, @RequestParam(value="pageSize",defaultValue="5")int pageSize){
         PageHelper.startPage(pageNo,pageSize);
         List<TBlog> tBlogs = blogService.searchBlog(search);
         PageInfo<TBlog> tBlogPageInfo = new PageInfo<>(tBlogs);
