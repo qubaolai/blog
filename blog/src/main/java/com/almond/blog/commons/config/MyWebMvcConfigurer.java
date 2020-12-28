@@ -21,7 +21,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
          */
         registry.addInterceptor(authenticationInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/admin","/admin/login","/static/**","/","/blog/**");
+                .excludePathPatterns("/druid","/admin","/admin/login","/static/**","/","/blog/**");
     }
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {

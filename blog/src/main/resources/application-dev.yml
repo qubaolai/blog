@@ -1,18 +1,26 @@
 server:
   port: 8553
 spring:
+  ## 数据库配置 - start
   datasource:
+    url: jdbc:mysql://39.106.29.131:3306/blog?useSSL=false&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&tinyInt1isBit=false
     username: root
-    password: root
-    url: jdbc:mysql://localhost:3306/blog?useUnicode=true&characterEncoding=utf-8&useSSL=true
-    driver-class-name: com.mysql.jdbc.Driver
+    password: 102030.ainiA
     type: com.alibaba.druid.pool.DruidDataSource
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
+    # 连接池配置
+    druid:
+      # 初始化连接数大小
+      initial-size: 5
+      # 最小连接数
+      min-idle: 3
+      # 最大连接数
+      max-active: 10
+      # 连接超时时间
+      max-wait: 60000
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: admin
   mvc:
     favicon:
       enabled: false

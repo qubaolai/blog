@@ -213,13 +213,13 @@
     </logger>
 
     <!-- 生产环境下，将此级别配置为适合的级别，以免日志文件太多或影响程序性能 -->
-    <root level="INFO">
+    <root level="ERROR">
         <appender-ref ref="ERROR" />
         <appender-ref ref="WARN" />
         <appender-ref ref="INFO" />
         <appender-ref ref="DEBUG" />
         <!-- 生产环境将请stdout去掉 -->
-        <appender-ref ref="STDOUT" />
+<!--        <appender-ref ref="STDOUT" />-->
     </root>
 
 </configuration>
